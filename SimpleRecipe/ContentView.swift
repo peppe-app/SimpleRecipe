@@ -1,21 +1,28 @@
-//
-//  ContentView.swift
-//  SimpleRecipe
-//
-//  Created by Giuseppe Sapienza on 29/2/2024.
-//
 
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var recipes: [Recipe] = []
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            RecipesView(recipes: recipes)
+                .tabItem {
+                    Label("Home", systemImage: "house.fill")
+                }
+            
+            EditRecipeView(
+                onEdit: onEditRecipe(_:)
+            )
+            .tabItem {
+                Label("New Recipe", systemImage: "plus.circle.fill")
+            }
         }
-        .padding()
+    }
+    
+    private func onEditRecipe(_ recipe: Recipe) {
+        recipes.append(recipe)
     }
 }
 
